@@ -36,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
                 Empleado c = ((Empleado)parent.getItemAtPosition(position));
                 String dni= c.getDNI();
-                String nombre= c.getDNI();
-                String profesion= c.getDNI();
+                String nombre= c.getNombre();
+                String profesion= c.getProfesion();
 
                 Empleado empleados= new Empleado(nombre,dni,profesion);
                 Intent form_empleado =new Intent(getApplicationContext(),FormularioActivity.class);
                 form_empleado.putExtra(EXTRA_EMPLEADO,empleados);
+
+                startActivity(form_empleado);
 
 
 

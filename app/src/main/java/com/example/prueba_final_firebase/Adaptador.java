@@ -46,7 +46,7 @@ public class Adaptador extends ArrayAdapter<Empleado> {
         tv_nombre.setText(clasereserva.get(position).getNombre());
 
         TextView tv_profesion=(TextView)item.findViewById(R.id.item_profesion);
-        tv_nombre.setText(clasereserva.get(position).getProfesion());
+        tv_profesion.setText(clasereserva.get(position).getProfesion());
 
 
 

@@ -40,7 +40,9 @@ public class FormularioActivity extends AppCompatActivity {
 
         }else{
 
-            Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
+
+
+
 
 
         }
