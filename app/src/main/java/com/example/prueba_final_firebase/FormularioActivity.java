@@ -55,6 +55,56 @@ public class FormularioActivity extends AppCompatActivity {
 
 
 
+        String nombre = etnombre.getText().toString();
+        String dni = etdni.getText().toString();
+        String profesion = etprofesion.getText().toString();
+
+
+        if( nombre.equals("")||dni.equals("")||profesion.equals("")){
+
+            Toast.makeText(this,"Debes rellenar todos los campos",Toast.LENGTH_LONG).show();
+
+
+        }else{
+
+
+            Empleado nuevoJugador = new Empleado(nombre,dni,profesion);
+            dbRef = FirebaseDatabase.getInstance().getReference().child("empleados");
+
+            // STRING NUEVA CLASE
+
+            dbRef.child(dni).setValue(nuevoJugador, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                    if (databaseError == null){
+
+                        Toast.makeText(getApplicationContext(),"agregado correctamente",Toast.LENGTH_LONG).show();
+
+
+
+
+                    }else{
+
+                        Toast.makeText(getApplicationContext(),"no se puede agregar",Toast.LENGTH_LONG).show();
+
+
+                    }
+
+
+                    limpiar();
+
+                }
+            });
+
+
+
+
+
+        }
+
+
+
 
     }
 
@@ -74,12 +124,12 @@ public class FormularioActivity extends AppCompatActivity {
         }else{
 
 
-            Empleado nuevoJugador = new Empleado(nombre,dni,profesion);
-            dbRef = FirebaseDatabase.getInstance().getReference().child("jugadores");
+            Empleado nuevoempleado = new Empleado(nombre,dni,profesion);
+            dbRef = FirebaseDatabase.getInstance().getReference().child("empleados");
 
             // STRING NUEVA CLASE
 
-            dbRef.child("00000000T").setValue(nuevoJugador, new DatabaseReference.CompletionListener() {
+            dbRef.child(dni).setValue(nuevoempleado, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
@@ -105,6 +155,48 @@ public class FormularioActivity extends AppCompatActivity {
 
 
         }
+
+
+    }
+
+    private void limpiar (){
+
+        etnombre.setText("");
+        etdni.setText("");
+        etprofesion.setText("");
+
+
+
+    }
+
+    public void clickeliminar (View view) {
+
+        String dni = etdni.getText().toString();
+
+        dbRef = FirebaseDatabase.getInstance().getReference().child("empleados");
+
+        dbRef.child(dni).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null){
+
+                    Toast.makeText(getApplicationContext(),"eliminado correctamente",Toast.LENGTH_LONG).show();
+                    limpiar();
+
+                }else{
+
+                    Toast.makeText(getApplicationContext(),"no se pudo eliminar correctamente",Toast.LENGTH_LONG).show();
+
+
+                }
+            }
+        });
+
+        limpiar();
+
+        dbRef.addValueEventListener(valueEventListener);
+
+
 
 
     }
